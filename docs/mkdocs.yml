@@ -1,12 +1,15 @@
-site_name: mkdocs-pdf-export-plugin
+gitsite_name: mkdocs-pandoc-plugin
 theme:
-  name: readthedoscs
+  name: readthedocs
 use_directory_urls: false
 plugins:
   - search
-  - pdf-export:
-      combined: true
-      pandoc_template: template.latex
+  - pandoc:
+      combined: yes
+      combined_output_path: pdf/mkdocs-pandoc.pdf
+      pandoc_args: 
+        template: template.latex
+        pdf_engine: xelatex
 
 nav:
   - Intro: index.md
