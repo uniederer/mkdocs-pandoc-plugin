@@ -34,3 +34,6 @@ jobs:
       run: |
         mkdocs build
         
+    env: 
+      CI_ENABLE_PDF_EXPORT: '1'
+      
