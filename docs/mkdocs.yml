@@ -1,10 +1,11 @@
-gitsite_name: mkdocs-pandoc-plugin
+site_name: mkdocs-pandoc-plugin
 theme:
   name: readthedocs
 use_directory_urls: false
 plugins:
   - search
   - pandoc:
+      enabled_if_env: CI_ENABLE_PDF_EXPORT
       combined: yes
       combined_output_path: pdf/mkdocs-pandoc.pdf
       pandoc_args: 

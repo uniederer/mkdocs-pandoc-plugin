@@ -1,17 +1,29 @@
-# MkDocs PDF Export Plugin <span class="noprint">[![Build Status](https://travis-ci.org/zhaoterryy/mkdocs-pdf-export-plugin.svg?branch=master)](https://travis-ci.org/zhaoterryy/mkdocs-pdf-export-plugin)</span>
+# MkDocs Pandoc Plugin
 
-The pdf-export plugin will export all markdown pages in your MkDocs repository as PDF files using [WeasyPrint](http://weasyprint.org/). The exported documents support many advanced features missing in most other PDF exports, such as a PDF Index and support for [CSS paged media module](https://developer.mozilla.org/en-US/docs/Web/CSS/@page).
+The pandoc plugin will export all markdown pages in your MkDocs repository to any format suppoorted by Pandoc.
 
-- MkDocs >= 1.0
-- Python >= 3.4
-- WeasyPrint >= 44
+This package requires:
+
+1. Python 3.6 or higher
+2. pandoc, xelatex(to support Chinese)
+
+    ```bash
+    sudo apt install pandoc
+    sudo apt install \
+        texlive \
+        texlive-latex-extra \
+        texlive-latex-recommended \
+        texlive-xetex
+    ```
+    
+3. MkDocs version 1.0 or higher (0.17 works as well)
 
 ## Installation
 
 Install the package with pip:
 
 ```bash
-pip install mkdocs-pdf-export-plugin
+pip install mkdocs-pandoc-plugin
 ```
 
 Enable the plugin in your `mkdocs.yml`:
@@ -19,7 +31,7 @@ Enable the plugin in your `mkdocs.yml`:
 ```yaml
 plugins:
     - search
-    - pdf-export
+    - pandoc
 ```
 
 > **Note:** If you have no `plugins` entry in your config file yet, you'll likely also want to add the `search` plugin. MkDocs enables it by default if there is no `plugins` entry set, but now you have to enable it explicitly.
@@ -34,12 +46,9 @@ If you want to contribute to the code of this project, please read the [Contribu
 
 #### **Special thanks**
 
-Special thanks go to [Stephan Hauser][shauser] for the original development of this plugin.
+Special thanks to [Stephan Hauser][shauser] for the development of [mkdocs-pdf-export-plugin][mkdocs-pdf-export-plugin] from which this plugin was forked.
 
-Special thanks go to [Lukas Geiter][lukasgeiter] for developing the [mkdocs-awesome-pages-plugin][awesome-pages-plugin] which was used as a base and for convincing [Stephan Hauser][shauser] to write a plugin for this.
-
-[github-issues]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin/issues
-[contributing]: https://github.com/zhaoterryy/mkdocs-pdf-export-plugin/blob/master/CONTRIBUTING.md
-[lukasgeiter]: https://github.com/lukasgeiter
+[github-issues]: https://github.com/alexandre-perrin/mkdocs-pandoc-plugin/issues
+[contributing]: https://github.com/alexandre-perrin/mkdocs-pandoc-plugin/blob/master/CONTRIBUTING.md
 [shauser]: https://github.com/shauser
-[awesome-pages-plugin]: https://github.com/lukasgeiter/mkdocs-awesome-pages-plugin
+[mkdocs-pdf-export-plugin]: https://github.com/shauser/mkdocs-pdf-export-plugin
