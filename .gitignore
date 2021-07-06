@@ -1,4 +1,5 @@
 build/
 dist/
+site/
 *.egg*
 __pycache__/
