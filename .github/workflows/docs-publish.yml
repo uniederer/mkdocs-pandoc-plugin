@@ -1,0 +1,32 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Docs
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  docs:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+      
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install .
+        sudo apt install pandoc
+        sudo apt install texlive texlive-latex-extra texlive-latex-recommended texlive-xetex
+        
+    - name: Deploy docs
+      run: mkdocs gh-deploy --force
+        
+    env: 
+      CI_ENABLE_PDF_EXPORT: '1'

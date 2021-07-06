@@ -31,9 +31,7 @@ jobs:
         sudo apt install texlive texlive-latex-extra texlive-latex-recommended texlive-xetex
         
     - name: Build docs
-      run: |
-        mkdocs build
+      run: mkdocs build
         
     env: 
       CI_ENABLE_PDF_EXPORT: '1'
-      
