@@ -4,23 +4,14 @@ Pass in options through `mkdocs.yml`:
 
 ```yaml
 plugins:
-    - pdf-export:
-        verbose: true
-        media_type: print
-        enabled_if_env: ENABLE_PDF_EXPORT
+  - pandoc:
+      combined: yes
+      enabled_if_env: CI_ENABLE_PANDOC_EXPORT
+      pandoc_args:
+        pdf_engine: xelatex
+        to: pdf
+        
 ```
-
-### `verbose`
-
-<small>*default: false*</small>
-
-Setting this to `true` will show all WeasyPrint debug messages during the build.
-
-### `media_type` 
-
-<small>*default: print*</small>
-
-This option allows you to use a different CSS media type (or a custom one like `pdf-export`) for the PDF export.
 
 ### `enabled_if_env`
 
@@ -32,42 +23,41 @@ Setting this option will enable the build only if there is an environment variab
 
 <small>*default: false*</small>
 
-Setting this to `true` will combine all pages into a single PDF file. All download links will point to this file.
+Setting this to `true` will combine all pages into a single document. All download links will point to this file.
 
 ### `combined_output_path` 
 
 <small>*default: pdf/combined.pdf*</small>
 
-This option allows you to use a different destination for the combined PDF file. Has no effect when `combined` is set to `false`.
+This option allows you to use a different destination for the combined document file. Has no effect when `combined` is set to `false`.
 
-### `theme_handler_path`
+### `pandoc_args`
 
-<small>*default: not set*</small>
+<small>*default: empty dict*</small>
 
-This option allows you to specify a custom theme handler module. This path must be ***relative to your project root*** (See example below).
+This allow to pass options to the pandoc export commands. 
+`pandoc_args` must be a dict of full pandoc option name / value:
 
-`mkdocs.yml`:
 ```yaml
 plugins:
-	- pdf-export:
-		theme_handler_path: theme-handler.py
-
+  - pandoc:
+      pandoc_args:
+        template: template.latex
+        pdf_engine: xelatex
 ```
 
-```bash
+Which will be translated to `pandoc --template=template.latex --pdf-engine=xelatex -o <file>.pdf <file>.md`
 
-project-root
+### `pandoc_extra_args`
 
-├── theme-handler.py
+<small>*default: empty string*</small>
 
-├── docs
+This allow to pass a string as raw options to the pandoc export commands.
 
-├── mkdocs.yml
+> **Note**: Be mindful not to duplicate arguments from `pandoc_args`.
 
-├── site
-
-.
-
-.
-
+```yaml
+plugins:
+  - pandoc:
+      pandoc_extra_args: "--template template.latex --pdf-engine xelatex"
 ```
