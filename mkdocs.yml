@@ -1,4 +1,5 @@
 site_name: mkdocs-pandoc-plugin
+site_url: https://alexandre-perrin.github.io/mkdocs-pandoc-plugin/
 theme:
   name: readthedocs
 use_directory_urls: false
