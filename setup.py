@@ -12,7 +12,7 @@ def read_file(filename):
 
 setup(
     name="mkdocs-pandoc-plugin",
-    version="1.0.0",
+    version="1.0.1",
     description="An MkDocs plugin to export content pages to any files that pandoc can handle",
     long_description=read_file("README.md"),
     long_description_content_type="text/markdown",
