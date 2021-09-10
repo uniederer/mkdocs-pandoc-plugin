@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://alexandre-perrin.github.io/mkdocs-pandoc-plugin/options.html" rel="canonical"/>
+<link href="img/favicon.ico" rel="shortcut icon"/>
+<title>Options - mkdocs-pandoc-plugin</title>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" rel="stylesheet">
+<link href="css/theme.css" rel="stylesheet">
+<link href="css/theme_extra.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+<script>
+    // Current page data
+    var mkdocs_page_name = "Options";
+    var mkdocs_page_input_path = "options.md";
+    var mkdocs_page_url = "/mkdocs-pandoc-plugin/options.html";
+  </script>
+<script defer="" src="js/jquery-2.1.1.min.js"></script>
+<script defer="" src="js/modernizr-2.8.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</link></link></head>
+<body class="wy-body-for-nav" role="document">
+<div class="wy-grid-for-nav">
+<nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+<div class="wy-side-scroll">
+<div class="wy-side-nav-search">
+<a class="icon icon-home" href="index.html"> mkdocs-pandoc-plugin</a>
+<div role="search">
+<form action="./search.html" class="wy-form" id="rtd-search-form" method="get">
+<input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+</form>
+</div>
+</div>
+<div aria-label="main navigation" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Intro</a>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="options.html">Options</a>
+<ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="#enabled_if_env">enabled_if_env</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#combined">combined</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#combined_output_path">combined_output_path</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pandoc_args">pandoc_args</a>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pandoc_extra_args">pandoc_extra_args</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+<nav aria-label="top navigation" class="wy-nav-top" role="navigation">
+<i class="fa fa-bars" data-toggle="wy-nav-top"></i>
+<a href="index.html">mkdocs-pandoc-plugin</a>
+</nav>
+<div class="wy-nav-content">
+<div class="rst-content">
+<div aria-label="breadcrumbs navigation" role="navigation">
+<ul class="wy-breadcrumbs">
+<li><a href="index.html">Docs</a> »</li>
+<li>Options</li>
+<li class="wy-breadcrumbs-aside">
+</li>
+</ul>
+<hr/>
+</div>
+<div role="main"><a class="md-content__icon pdf-download-btn" download href="pdf/mkdocs-pandoc.pdf" title="Download"><i class="fa fas fa-download"></i><small> mkdocs-pandoc.pdf </small></a>
+<div class="section">
+<h1 id="options">Options</h1>
+<p>Pass in options through <code>mkdocs.yml</code>:</p>
+<pre><code class="language-yaml">plugins:
+  - pandoc:
+      combined: yes
+      enabled_if_env: CI_ENABLE_PANDOC_EXPORT
+      pandoc_args:
+        pdf_engine: xelatex
+        to: pdf
+
+</code></pre>
+<h3 id="enabled_if_env"><code>enabled_if_env</code></h3>
+<p><small><em>default: not set</em></small></p>
+<p>Setting this option will enable the build only if there is an environment variable set to 1. This is useful to disable building the PDF files during development, since it can take a long time to export all files.</p>
+<h3 id="combined"><code>combined</code></h3>
+<p><small><em>default: false</em></small></p>
+<p>Setting this to <code>true</code> will combine all pages into a single document. All download links will point to this file.</p>
+<h3 id="combined_output_path"><code>combined_output_path</code></h3>
+<p><small><em>default: pdf/combined.pdf</em></small></p>
+<p>This option allows you to use a different destination for the combined document file. Has no effect when <code>combined</code> is set to <code>false</code>.</p>
+<h3 id="pandoc_args"><code>pandoc_args</code></h3>
+<p><small><em>default: empty dict</em></small></p>
+<p>This allow to pass options to the pandoc export commands. 
+<code>pandoc_args</code> must be a dict of full pandoc option name / value:</p>
+<pre><code class="language-yaml">plugins:
+  - pandoc:
+      pandoc_args:
+        template: template.latex
+        pdf_engine: xelatex
+</code></pre>
+<p>Which will be translated to <code>pandoc --template=template.latex --pdf-engine=xelatex -o &lt;file&gt;.pdf &lt;file&gt;.md</code></p>
+<h3 id="pandoc_extra_args"><code>pandoc_extra_args</code></h3>
+<p><small><em>default: empty string</em></small></p>
+<p>This allow to pass a string as raw options to the pandoc export commands.</p>
+<blockquote>
+<p><strong>Note</strong>: Be mindful not to duplicate arguments from <code>pandoc_args</code>.</p>
+</blockquote>
+<pre><code class="language-yaml">plugins:
+  - pandoc:
+      pandoc_extra_args: "--template template.latex --pdf-engine xelatex"
+</code></pre>
+</div>
+</div>
+<footer>
+<div aria-label="footer navigation" class="rst-footer-buttons" role="navigation">
+<a class="btn btn-neutral" href="index.html" title="Intro"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+</div>
+<hr/>
+<div role="contentinfo">
+<!-- Copyright etc -->
+</div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+</div>
+</div>
+</section>
+</div>
+<div aria-label="versions" class="rst-versions" role="note">
+<span class="rst-current-version" data-toggle="rst-current-version">
+<span><a href="index.html" style="color: #fcfcfc">« Previous</a></span>
+</span>
+</div>
+<script>var base_url = '.';</script>
+<script defer="" src="js/theme_extra.js"></script>
+<script defer="" src="js/theme.js"></script>
+<script defer="" src="search/main.js"></script>
+<script defer="">
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+</body>
+</html>
