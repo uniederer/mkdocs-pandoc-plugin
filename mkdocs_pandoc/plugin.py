@@ -56,14 +56,21 @@ class PandocPlugin(BasePlugin):
         )
 
     def on_nav(self, nav, config, files):
-        if not self.enabled:
-            return nav
-
-        self.renderer.pages = [None] * len(nav.pages)
-        for page in nav.pages:
-            self.renderer.page_order.append(page.file.src_path)
-
+        # We collect recursively all navigation levels provided by the mkdocs configuration
+        self.collect_nav(nav, 1)
         return nav
+
+    def collect_nav(self, nav, level: int):
+        if nav is None:
+            return 
+
+        for child in nav:
+            if hasattr(child, "file"):
+                self.renderer.add_section(level, str(child.title), child.file.src_path)
+            else:
+                self.renderer.add_section(level, str(child.title), "")
+
+            self.collect_nav(child.children, level + 1)
 
     def on_post_page(self, output_content, page, config):
         if not self.enabled:

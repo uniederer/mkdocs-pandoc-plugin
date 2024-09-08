@@ -56,9 +56,9 @@ class Renderer(object):
     ):
         self.combined = combined
         self.docs_dir = docs_dir
-        self.page_order = []
         self.pgnum = 0
-        self.pages = []
+        self.docs = {}
+        self.sections = []
         self.args = args
         self.extra_args = extra_args
 
@@ -74,11 +74,14 @@ class Renderer(object):
             **self.args,
         )
         pandoc.write()
+        
+    def add_section(self, level: int, title: str, path: str):
+        new_item = {"level": level, "title": title, "path": path}  
+        self.sections.append(new_item)
 
     def add_doc(self, rel_path: str, abs_path: str):
         try:
-            pos = self.page_order.index(rel_path)
-            self.pages[pos] = abs_path
+            self.docs[rel_path] = abs_path
         except:
             pass
 
@@ -86,14 +89,30 @@ class Renderer(object):
         combined_md = output_path + ".md"
 
         with open(combined_md, "w") as f:
-            for p in self.pages:
-                if p is None:
+            for section in self.sections:
+                if section is None:
                     log.error("Unexpected error - not all pages were rendered properly")
                     continue
-
-                with open(p, "r") as rf:
+                
+                # If no path is assigned to the section, we simply insert a heading to 
+                # keep the structure outlined in mkdocs.yml
+                section_prefix = "#" * (section["level"])
+                if section["path"] is None or section["path"] == "":
+                    f.write(section_prefix + " " + section["title"] + "\n\n")
+                    continue
+                
+                # If a path is specified, we add the file's content to a combined document
+                path_abs = self.docs[section["path"]]
+                with open(path_abs, "r") as rf:
                     lines = rf.readlines()
-                    f.writelines(lines)
+
+                    # Augment the heading's level according to the relative level
+                    for line in lines:
+                        if line.lstrip().startswith("#"):
+                            f.write(section_prefix + line[1::])  # Augment with an additional '#'
+                        else:
+                            f.write(line)
+
                     if not lines[-1].endswith("\n"):
                         f.write("\n")
                     f.write("\n")
