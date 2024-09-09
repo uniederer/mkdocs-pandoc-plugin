@@ -56,8 +56,10 @@ class PandocPlugin(BasePlugin):
         )
 
     def on_nav(self, nav, config, files):
-        # We collect recursively all navigation levels provided by the mkdocs configuration
-        self.collect_nav(nav, 1)
+        if self.enabled:
+            # We collect recursively all navigation levels provided by the mkdocs configuration
+            self.collect_nav(nav, 1)
+            
         return nav
 
     def collect_nav(self, nav, level: int):
